@@ -56,13 +56,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		460773F22F4A213D00250009 /* Exceptions for "harmonica-hn" folder in "harmonica-hn" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 460772B92F4973F300250009 /* harmonica-hn */;
-		};
 		460774032F4A236500250009 /* Exceptions for "HNNotificationExtension" folder in "HNNotificationExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -75,9 +68,6 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		460772BC2F4973F300250009 /* harmonica-hn */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				460773F22F4A213D00250009 /* Exceptions for "harmonica-hn" folder in "harmonica-hn" target */,
-			);
 			path = "harmonica-hn";
 			sourceTree = "<group>";
 		};

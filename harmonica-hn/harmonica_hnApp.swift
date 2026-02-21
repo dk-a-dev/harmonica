@@ -29,10 +29,13 @@ struct harmonica_hnApp: App {
     
     @State private var themeManager = ThemeManager()
     @State private var authService = AuthService.shared
+    @Environment(\.scenePhase) private var scenePhase
+    
     let persistence = PersistenceController.shared
     
     init() {
         PushRegistrationService.shared.requestPermissions()
+        BackgroundPushService.shared.registerBackgroundTasks()
     }
     
     var body: some Scene {
@@ -42,6 +45,11 @@ struct harmonica_hnApp: App {
                 .environment(authService)
                 .environment(\.managedObjectContext, persistence.container.viewContext)
                 .preferredColorScheme(themeManager.current.colorScheme)
+        }
+        .onChange(of: scenePhase) { oldPhase, newPhase in
+            if newPhase == .background {
+                BackgroundPushService.shared.scheduleAppRefresh()
+            }
         }
     }
 }
