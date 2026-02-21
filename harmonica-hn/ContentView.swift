@@ -9,8 +9,11 @@ import SwiftUI
 struct ContentView: View {
     @Environment(ThemeManager.self) var themeManager
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @AppStorage("defaultStartupTab") var defaultStartupTab = "Top"
+    
     @State private var selectedTab: Tab = .top
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
+    @State private var didInitialSetup = false
     
     enum Tab: String, CaseIterable {
         case top = "Top"
@@ -33,36 +36,44 @@ struct ContentView: View {
     }
     
     var body: some View {
-        if horizontalSizeClass == .regular {
-            NavigationSplitView(columnVisibility: $columnVisibility) {
-                List(Tab.allCases, id: \.self) { tab in
-                    Button {
-                        selectedTab = tab
-                    } label: {
-                        Label(tab.rawValue, systemImage: tab.icon)
-                            .foregroundStyle(selectedTab == tab ? themeManager.current.accent : .primary)
+        Group {
+            if horizontalSizeClass == .regular {
+                NavigationSplitView(columnVisibility: $columnVisibility) {
+                    List(Tab.allCases, id: \.self) { tab in
+                        Button {
+                            selectedTab = tab
+                        } label: {
+                            Label(tab.rawValue, systemImage: tab.icon)
+                                .foregroundStyle(selectedTab == tab ? themeManager.current.accent : .primary)
+                        }
                     }
-                }
-                .navigationTitle("Harmonic HN")
-            } detail: {
-                NavigationStack {
-                    StoriesView(feedType: selectedTab ?? .top)
-                }
-            }
-            .tint(themeManager.current.accent)
-        } else {
-            TabView(selection: $selectedTab) {
-                ForEach(Tab.allCases, id: \.self) { tab in
+                    .navigationTitle("Harmonic HN")
+                } detail: {
                     NavigationStack {
-                        StoriesView(feedType: tab)
+                        StoriesView(feedType: selectedTab)
                     }
-                    .tabItem {
-                        Label(tab.rawValue, systemImage: tab.icon)
-                    }
-                    .tag(tab)
                 }
+                .tint(themeManager.current.accent)
+            } else {
+                TabView(selection: $selectedTab) {
+                    ForEach(Tab.allCases, id: \.self) { tab in
+                        NavigationStack {
+                            StoriesView(feedType: tab)
+                        }
+                        .tabItem {
+                            Label(tab.rawValue, systemImage: tab.icon)
+                        }
+                        .tag(tab)
+                    }
+                }
+                .tint(themeManager.current.accent)
             }
-            .tint(themeManager.current.accent)
+        }
+        .onAppear {
+            if !didInitialSetup {
+                selectedTab = Tab(rawValue: defaultStartupTab) ?? .top
+                didInitialSetup = true
+            }
         }
     }
 }

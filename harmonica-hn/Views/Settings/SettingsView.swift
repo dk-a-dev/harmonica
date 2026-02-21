@@ -26,6 +26,10 @@ struct SettingsView: View {
     @AppStorage("commentSorting") var commentSorting = "Default"
     @AppStorage("monochromeThreadIndicators") var monochromeThreadIndicators = false
     @AppStorage("autoCollapseTopLevel") var autoCollapseTopLevel = false
+    @AppStorage("compactLayout") var compactLayout = false
+    @AppStorage("showPoints") var showPoints = true
+    @AppStorage("showDomain") var showDomain = true
+    @AppStorage("defaultStartupTab") var defaultStartupTab = "Top"
     
     var body: some View {
         let theme = themeManager.current
@@ -88,6 +92,42 @@ struct SettingsView: View {
                     
                     // STORIES
                     Section {
+                        Picker("Startup feed", selection: $defaultStartupTab) {
+                            Text("Top").tag("Top")
+                            Text("New").tag("New")
+                            Text("Ask").tag("Ask")
+                            Text("Show").tag("Show")
+                            Text("Jobs").tag("Jobs")
+                            Text("Bookmarked").tag("Bookmarked")
+                        }
+                        .foregroundColor(theme.text)
+                        
+                        Toggle(isOn: $compactLayout) {
+                            Label {
+                                VStack(alignment: .leading) {
+                                    Text("Compact list layout").foregroundColor(theme.text)
+                                    Text("Display stories as a tight list")
+                                        .font(.caption).foregroundColor(theme.secondaryText)
+                                }
+                            } icon: {
+                                Image(systemName: "list.bullet")
+                                    .foregroundColor(theme.secondaryText)
+                            }
+                        }
+                        .tint(theme.accent)
+                        
+                        if compactLayout {
+                            Toggle(isOn: $showPoints) {
+                                Label("Show points in compact list", systemImage: "arrow.up.circle")
+                                    .foregroundColor(theme.text)
+                            }.tint(theme.accent)
+                            
+                            Toggle(isOn: $showDomain) {
+                                Label("Show domain in compact list", systemImage: "link")
+                                    .foregroundColor(theme.text)
+                            }.tint(theme.accent)
+                        }
+                        
                         Toggle(isOn: $hideJobPosts) {
                             Label {
                                 VStack(alignment: .leading) {
@@ -243,6 +283,20 @@ struct SettingsView: View {
                     
                     // ABOUT
                     Section {
+                        Button(action: {
+                            // Placeholder for checking updates
+                        }) {
+                            Label("Check for App Updates", systemImage: "arrow.triangle.2.circlepath")
+                                .foregroundColor(theme.text)
+                        }
+                        
+                        Button(action: {
+                            // Placeholder for showing changelog modal
+                        }) {
+                            Label("View Changelog", systemImage: "doc.text")
+                                .foregroundColor(theme.text)
+                        }
+                        
                         HStack {
                             Label("Version", systemImage: "info.circle")
                                 .foregroundColor(theme.text)

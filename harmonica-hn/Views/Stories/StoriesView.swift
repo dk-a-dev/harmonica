@@ -78,13 +78,19 @@ struct StoriesView: View {
 // MARK: - Extracted List (fixes compiler type-check timeout)
 struct StoryListContent: View {
     @Environment(ThemeManager.self) var themeManager
+    @Environment(AuthService.self) var authService
+    @AppStorage("compactLayout") var compactLayout = false
     let vm: StoriesViewModel
     
     var body: some View {
         List {
             ForEach(Array(vm.filteredStories.enumerated()), id: \.element.id) { index, story in
                 ZStack {
-                    StoryRowView(story: story, rank: index + 1)
+                    if compactLayout {
+                        CompactStoryRowView(story: story, rank: index + 1)
+                    } else {
+                        StoryRowView(story: story, rank: index + 1)
+                    }
                     NavigationLink(destination: StoryDetailView(story: story)) {
                         EmptyView()
                     }
@@ -92,6 +98,24 @@ struct StoryListContent: View {
                 }
                 .listRowBackground(Color.clear)
                 .listRowSeparator(.hidden)
+                .swipeActions(edge: .leading) {
+                    Button {
+                        HapticManager.generateFeedback(style: .medium)
+                        Task { try? await authService.vote(itemId: story.id) }
+                    } label: {
+                        Label("Upvote", systemImage: "arrow.up")
+                    }
+                    .tint(themeManager.current.accent)
+                }
+                .swipeActions(edge: .trailing) {
+                    Button {
+                        HapticManager.generateFeedback(style: .heavy)
+                        BookmarkRepository.shared.toggleBookmark(story: story)
+                    } label: {
+                        Label("Bookmark", systemImage: BookmarkRepository.shared.isBookmarked(storyID: story.id) ? "star.slash.fill" : "star.fill")
+                    }
+                    .tint(themeManager.current.secondaryText)
+                }
                 .onAppear {
                     if index == vm.stories.count - 5 {
                         Task { await vm.loadMore() }
