@@ -1,0 +1,13 @@
+name = "harmonica-hn-push"
+main = "src/index.ts"
+compatibility_date = "2024-03-20"
+compatibility_flags = ["nodejs_compat"]
+
+# Bind a KV Namespace to store User states
+# You will need to create this namespace using: npx wrangler kv:namespace create HN_DB
+kv_namespaces = [
+  { binding = "HN_DB", id = "PREVIEW_ID", preview_id = "PREVIEW_ID" }
+]
+
+[triggers]
+crons = ["*/5 * * * *"] # Run every 5 minutes
