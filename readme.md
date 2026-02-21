@@ -118,14 +118,14 @@ All platform-specific code is wrapped in `#if os(iOS)` / `#if os(macOS)` blocks 
 
 ## Roadmap
 
-- [ ] HN login + voting
+- [x] HN login + voting
 - [ ] Push notifications for replies
 - [ ] iCloud sync for bookmarks  
-- [ ] iPad optimised split view
+- [x] iPad optimised split view
 - [ ] Home screen widget — top story of the day
 - [ ] Filter stories by keyword / domain
 - [ ] Comment navigation buttons (jump between top-level)
-- [ ] Font size settings
+- [x] Font size settings
 - [x] Reader mode in WebView
 
 ---
