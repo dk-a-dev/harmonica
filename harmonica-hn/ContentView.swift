@@ -4,85 +4,44 @@
 //
 //  Created by Dev Keshwani on 21/02/26.
 //
-
 import SwiftUI
-import CoreData
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
-
+    @Environment(ThemeManager.self) var themeManager
+    @State private var selectedTab: Tab = .top
+    
+    enum Tab: String, CaseIterable {
+        case top = "Top"
+        case new = "New"
+        case ask = "Ask"
+        case show = "Show"
+        case jobs = "Jobs"
+        case bookmarked = "Bookmarked"
+        
+        var icon: String {
+            switch self {
+            case .top: return "flame"
+            case .new: return "sparkles"
+            case .ask: return "questionmark.bubble"
+            case .show: return "eye"
+            case .jobs: return "briefcase"
+            case .bookmarked: return "star.fill"
+            }
+        }
+    }
+    
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                    } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
-                    }
+        TabView(selection: $selectedTab) {
+            ForEach(Tab.allCases, id: \.self) { tab in
+                NavigationStack {
+                    StoriesView(feedType: tab)
                 }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-#if os(iOS)
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
+                .tabItem {
+                    Label(tab.rawValue, systemImage: tab.icon)
                 }
-#endif
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-            Text("Select an item")
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                .tag(tab)
             }
         }
+        .tint(themeManager.current.accent)
     }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-}
-
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
-
-#Preview {
-    ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }
