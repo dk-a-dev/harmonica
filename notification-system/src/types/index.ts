@@ -1,5 +1,9 @@
 export interface Env {
     HN_DB: KVNamespace;
+    APNS_TEAM_ID: string;
+    APNS_KEY_ID: string;
+    APNS_BUNDLE_ID: string;
+    APNS_PRIVATE_KEY: string;
 }
 
 export interface HNItem {

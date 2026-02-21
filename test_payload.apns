@@ -1,0 +1,12 @@
+{
+  "Simulator Target Bundle": "com.dkadev.harmonica-hn",
+  "aps": {
+    "alert": {
+      "title": "New Reply (Fallback)",
+      "body": "This text should be mutated by the extension."
+    },
+    "mutable-content": 1,
+    "sound": "default"
+  },
+  "item_id": 40161474
+}

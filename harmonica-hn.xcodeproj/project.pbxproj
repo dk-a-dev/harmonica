@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		460773FF2F4A236500250009 /* HNNotificationExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 460773F82F4A236500250009 /* HNNotificationExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		460772CD2F4973F400250009 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -21,17 +25,59 @@
 			remoteGlobalIDString = 460772B92F4973F300250009;
 			remoteInfo = "harmonica-hn";
 		};
+		460773FD2F4A236500250009 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 460772B22F4973F300250009 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 460773F72F4A236500250009;
+			remoteInfo = HNNotificationExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		460774042F4A236500250009 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				460773FF2F4A236500250009 /* HNNotificationExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		460772BA2F4973F300250009 /* harmonica-hn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "harmonica-hn.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		460772CC2F4973F400250009 /* harmonica-hnTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "harmonica-hnTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		460772D62F4973F400250009 /* harmonica-hnUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "harmonica-hnUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		460773F82F4A236500250009 /* HNNotificationExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = HNNotificationExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		460773F22F4A213D00250009 /* Exceptions for "harmonica-hn" folder in "harmonica-hn" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 460772B92F4973F300250009 /* harmonica-hn */;
+		};
+		460774032F4A236500250009 /* Exceptions for "HNNotificationExtension" folder in "HNNotificationExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 460773F72F4A236500250009 /* HNNotificationExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		460772BC2F4973F300250009 /* harmonica-hn */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				460773F22F4A213D00250009 /* Exceptions for "harmonica-hn" folder in "harmonica-hn" target */,
+			);
 			path = "harmonica-hn";
 			sourceTree = "<group>";
 		};
@@ -43,6 +89,14 @@
 		460772D92F4973F400250009 /* harmonica-hnUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "harmonica-hnUITests";
+			sourceTree = "<group>";
+		};
+		460773F92F4A236500250009 /* HNNotificationExtension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				460774032F4A236500250009 /* Exceptions for "HNNotificationExtension" folder in "HNNotificationExtension" target */,
+			);
+			path = HNNotificationExtension;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -69,6 +123,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		460773F52F4A236500250009 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -78,6 +139,7 @@
 				460772BC2F4973F300250009 /* harmonica-hn */,
 				460772CF2F4973F400250009 /* harmonica-hnTests */,
 				460772D92F4973F400250009 /* harmonica-hnUITests */,
+				460773F92F4A236500250009 /* HNNotificationExtension */,
 				460772BB2F4973F300250009 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -88,6 +150,7 @@
 				460772BA2F4973F300250009 /* harmonica-hn.app */,
 				460772CC2F4973F400250009 /* harmonica-hnTests.xctest */,
 				460772D62F4973F400250009 /* harmonica-hnUITests.xctest */,
+				460773F82F4A236500250009 /* HNNotificationExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -102,10 +165,12 @@
 				460772B62F4973F300250009 /* Sources */,
 				460772B72F4973F300250009 /* Frameworks */,
 				460772B82F4973F300250009 /* Resources */,
+				460774042F4A236500250009 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				460773FE2F4A236500250009 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				460772BC2F4973F300250009 /* harmonica-hn */,
@@ -163,6 +228,28 @@
 			productReference = 460772D62F4973F400250009 /* harmonica-hnUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		460773F72F4A236500250009 /* HNNotificationExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 460774002F4A236500250009 /* Build configuration list for PBXNativeTarget "HNNotificationExtension" */;
+			buildPhases = (
+				460773F42F4A236500250009 /* Sources */,
+				460773F52F4A236500250009 /* Frameworks */,
+				460773F62F4A236500250009 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				460773F92F4A236500250009 /* HNNotificationExtension */,
+			);
+			name = HNNotificationExtension;
+			packageProductDependencies = (
+			);
+			productName = HNNotificationExtension;
+			productReference = 460773F82F4A236500250009 /* HNNotificationExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -184,6 +271,9 @@
 						CreatedOnToolsVersion = 26.2;
 						TestTargetID = 460772B92F4973F300250009;
 					};
+					460773F72F4A236500250009 = {
+						CreatedOnToolsVersion = 26.2;
+					};
 				};
 			};
 			buildConfigurationList = 460772B52F4973F300250009 /* Build configuration list for PBXProject "harmonica-hn" */;
@@ -203,6 +293,7 @@
 				460772B92F4973F300250009 /* harmonica-hn */,
 				460772CB2F4973F400250009 /* harmonica-hnTests */,
 				460772D52F4973F400250009 /* harmonica-hnUITests */,
+				460773F72F4A236500250009 /* HNNotificationExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -223,6 +314,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		460772D42F4973F400250009 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		460773F62F4A236500250009 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -253,6 +351,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		460773F42F4A236500250009 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -265,6 +370,11 @@
 			isa = PBXTargetDependency;
 			target = 460772B92F4973F300250009 /* harmonica-hn */;
 			targetProxy = 460772D72F4973F400250009 /* PBXContainerItemProxy */;
+		};
+		460773FE2F4A236500250009 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 460773F72F4A236500250009 /* HNNotificationExtension */;
+			targetProxy = 460773FD2F4A236500250009 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -390,14 +500,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "harmonica-hn/harmonica-hn.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6Q448USHHF;
+				DEVELOPMENT_TEAM = 2TS98F9X52;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "harmonica-hn/Info.plist";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -434,14 +546,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "harmonica-hn/harmonica-hn.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6Q448USHHF;
+				DEVELOPMENT_TEAM = 2TS98F9X52;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "harmonica-hn/Info.plist";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -575,6 +689,67 @@
 			};
 			name = Release;
 		};
+		460774012F4A236500250009 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2TS98F9X52;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = HNNotificationExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = HNNotificationExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dkadev.harmonica-hn.HNNotificationExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		460774022F4A236500250009 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2TS98F9X52;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = HNNotificationExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = HNNotificationExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dkadev.harmonica-hn.HNNotificationExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -610,6 +785,15 @@
 			buildConfigurations = (
 				460772E72F4973F400250009 /* Debug */,
 				460772E82F4973F400250009 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		460774002F4A236500250009 /* Build configuration list for PBXNativeTarget "HNNotificationExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				460774012F4A236500250009 /* Debug */,
+				460774022F4A236500250009 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

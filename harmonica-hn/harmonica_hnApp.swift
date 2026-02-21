@@ -7,11 +7,33 @@
 import SwiftUI
 import CoreData
 
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
+        let token = tokenParts.joined()
+        print("Device Token: \(token)")
+        
+        Task {
+            await PushRegistrationService.shared.registerDevice(token: token)
+        }
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Failed to register for notifications: \(error.localizedDescription)")
+    }
+}
+
 @main
 struct harmonica_hnApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
     @State private var themeManager = ThemeManager()
     @State private var authService = AuthService.shared
     let persistence = PersistenceController.shared
+    
+    init() {
+        PushRegistrationService.shared.requestPermissions()
+    }
     
     var body: some Scene {
         WindowGroup {

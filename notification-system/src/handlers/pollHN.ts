@@ -78,7 +78,7 @@ export async function handlePollHN(env: Env): Promise<void> {
 
                 for (const newKid of newKids) {
                     if (prefs.rateLimitHits < 100) {
-                        await sendPushNotification(prefs.deviceTokens, newKid, itemId);
+                        await sendPushNotification(prefs.deviceTokens, newKid, itemId, env);
                         prefs.rateLimitHits++;
                         updatedPrefs = true;
                     }
