@@ -83,8 +83,12 @@ struct StoryListContent: View {
     var body: some View {
         List {
             ForEach(Array(vm.filteredStories.enumerated()), id: \.element.id) { index, story in
-                NavigationLink(destination: StoryDetailView(story: story)) {
+                ZStack {
                     StoryRowView(story: story, rank: index + 1)
+                    NavigationLink(destination: StoryDetailView(story: story)) {
+                        EmptyView()
+                    }
+                    .opacity(0)
                 }
                 .listRowBackground(Color.clear)
                 .listRowSeparator(.hidden)

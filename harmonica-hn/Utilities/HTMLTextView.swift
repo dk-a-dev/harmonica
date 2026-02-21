@@ -8,10 +8,11 @@ import SwiftUI
 
 struct HTMLTextView: View {
     let html: String
+    @AppStorage("commentTextSize") var commentTextSize: Double = 14.0
     
     var body: some View {
         Text(parseHTML(html))
-            .font(.system(size: 14))
+            .font(.system(size: commentTextSize))
             .textSelection(.enabled)
     }
     

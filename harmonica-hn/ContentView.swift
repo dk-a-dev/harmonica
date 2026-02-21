@@ -8,7 +8,9 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(ThemeManager.self) var themeManager
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @State private var selectedTab: Tab = .top
+    @State private var columnVisibility: NavigationSplitViewVisibility = .all
     
     enum Tab: String, CaseIterable {
         case top = "Top"
@@ -31,17 +33,36 @@ struct ContentView: View {
     }
     
     var body: some View {
-        TabView(selection: $selectedTab) {
-            ForEach(Tab.allCases, id: \.self) { tab in
+        if horizontalSizeClass == .regular {
+            NavigationSplitView(columnVisibility: $columnVisibility) {
+                List(Tab.allCases, id: \.self) { tab in
+                    Button {
+                        selectedTab = tab
+                    } label: {
+                        Label(tab.rawValue, systemImage: tab.icon)
+                            .foregroundStyle(selectedTab == tab ? themeManager.current.accent : .primary)
+                    }
+                }
+                .navigationTitle("Harmonic HN")
+            } detail: {
                 NavigationStack {
-                    StoriesView(feedType: tab)
+                    StoriesView(feedType: selectedTab ?? .top)
                 }
-                .tabItem {
-                    Label(tab.rawValue, systemImage: tab.icon)
-                }
-                .tag(tab)
             }
+            .tint(themeManager.current.accent)
+        } else {
+            TabView(selection: $selectedTab) {
+                ForEach(Tab.allCases, id: \.self) { tab in
+                    NavigationStack {
+                        StoriesView(feedType: tab)
+                    }
+                    .tabItem {
+                        Label(tab.rawValue, systemImage: tab.icon)
+                    }
+                    .tag(tab)
+                }
+            }
+            .tint(themeManager.current.accent)
         }
-        .tint(themeManager.current.accent)
     }
 }

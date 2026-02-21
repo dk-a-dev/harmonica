@@ -96,7 +96,7 @@ struct SettingsView: View {
                                         .font(.caption).foregroundColor(theme.secondaryText)
                                 }
                             } icon: {
-                                Image(systemName: "briefcase.slash")
+                                Image(systemName: "briefcase")
                                     .foregroundColor(theme.secondaryText)
                             }
                         }
@@ -257,11 +257,17 @@ struct SettingsView: View {
                     } header: { Text("ABOUT").foregroundColor(theme.secondaryText) }
                       .listRowBackground(theme.surface.opacity(0.7))
                 }
+                #if os(iOS)
                 .listStyle(.insetGrouped)
+                #else
+                .listStyle(.sidebar)
+                #endif
                 .scrollContentBackground(.hidden)
             }
             .navigationTitle("Settings")
+            #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar {
                 ToolbarItem(placement: .automatic) {
                     Button("Done") { dismiss() }

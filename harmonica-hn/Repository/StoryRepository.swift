@@ -23,6 +23,10 @@ actor StoryRepository {
     // MARK: - Fetch Stories
     
     func fetchStories(feedType: String, forceRefresh: Bool = false) async throws -> [Story] {
+        if feedType == "bookmarked" {
+            return BookmarkRepository.shared.allBookmarks()
+        }
+        
         // 1. Check cache first
         if !forceRefresh {
             let cached = fetchCachedStories(feedType: feedType)

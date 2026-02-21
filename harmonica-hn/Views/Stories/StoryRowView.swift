@@ -13,6 +13,7 @@ struct StoryRowView: View {
     let rank: Int
     
     @State private var pressed = false
+    @State private var isVisited = false
     
     var body: some View {
         let theme = themeManager.current
@@ -168,7 +169,12 @@ struct StoryRowView: View {
         )
         .scaleEffect(pressed ? 0.97 : 1.0)
         .animation(.spring(duration: 0.2), value: pressed)
+        .opacity(isVisited ? 0.5 : 1.0)
         .padding(.horizontal, 12)
         .padding(.vertical, 4)
+        .onAppear {
+            let clicked = UserDefaults.standard.array(forKey: "clickedStories") as? [Int] ?? []
+            isVisited = clicked.contains(story.id)
+        }
     }
 }

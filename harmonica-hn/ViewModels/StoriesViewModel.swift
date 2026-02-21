@@ -83,6 +83,11 @@ class StoriesViewModel {
         isLoading = true
         
         do {
+            if feedType == .bookmarked {
+                hasMore = false
+                isLoading = false
+                return
+            }
             if feedType == .top {
                 let more = try await AlgoliaService.shared.fetchTopStories(
                     hitsPerPage: 30,
@@ -112,13 +117,18 @@ class StoriesViewModel {
     }
     
     
-    // Add these two properties to StoriesViewModel:
     var timeFilter: TimeFilter = .all
-
+    
     var filteredStories: [Story] {
-        guard let seconds = timeFilter.seconds else { return stories }
+        var result = stories
+        if UserDefaults.standard.bool(forKey: "hideClickedPosts") {
+            let clicked = UserDefaults.standard.array(forKey: "clickedStories") as? [Int] ?? []
+            let clickedSet = Set(clicked)
+            result = result.filter { !clickedSet.contains($0.id) }
+        }
+        guard let seconds = timeFilter.seconds else { return result }
         let cutoff = Date().timeIntervalSince1970 - seconds
-        return stories.filter { $0.time >= cutoff }
+        return result.filter { $0.time >= cutoff }
     }
 
     

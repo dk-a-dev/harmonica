@@ -71,6 +71,13 @@ struct StoryDetailView: View {
         .task {
             await vm.load(storyID: story.id)
             isBookmarked = BookmarkRepository.shared.isBookmarked(storyID: story.id)
+            
+            // Mark as visited
+            var clicked = UserDefaults.standard.array(forKey: "clickedStories") as? [Int] ?? []
+            if !clicked.contains(story.id) {
+                clicked.append(story.id)
+                UserDefaults.standard.set(clicked, forKey: "clickedStories")
+            }
         }
         .sheet(item: $webViewURL) { url in
             InAppWebView(url: url)
