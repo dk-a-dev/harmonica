@@ -9,7 +9,10 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(ThemeManager.self) var themeManager
+    @Environment(AuthService.self) var authService
     @Environment(\.dismiss) var dismiss
+    
+    @State private var showLogin = false
     
     // UserDefaults keys
     @AppStorage("hideJobPosts") var hideJobPosts = false
@@ -32,6 +35,29 @@ struct SettingsView: View {
                 LiquidBackground()
                 
                 List {
+                    // ACCOUNT
+                    Section {
+                        if authService.isLoggedIn {
+                            HStack {
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("Logged in as").foregroundColor(theme.secondaryText).font(.caption)
+                                    Text(authService.username ?? "").foregroundColor(theme.text).font(.body.bold())
+                                }
+                                Spacer()
+                                Button("Logout") {
+                                    authService.logout()
+                                }
+                                .foregroundColor(.red)
+                            }
+                        } else {
+                            Button("Login to Hacker News") {
+                                showLogin = true
+                            }
+                            .foregroundColor(theme.accent)
+                        }
+                    } header: { Text("ACCOUNT").foregroundColor(theme.secondaryText) }
+                      .listRowBackground(theme.surface.opacity(0.7))
+                    
                     // THEME
                     Section {
                         ForEach(AppTheme.allThemes) { t in
@@ -242,6 +268,11 @@ struct SettingsView: View {
                         .foregroundColor(theme.accent)
                 }
             }
+        }
+        .sheet(isPresented: $showLogin) {
+            LoginView()
+                .environment(themeManager)
+                .environment(authService)
         }
     }
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct StoryDetailView: View {
     @Environment(ThemeManager.self) var themeManager
+    @Environment(AuthService.self) var authService
     
     let story: Story
     @State private var vm = CommentsViewModel()
@@ -18,6 +19,11 @@ struct StoryDetailView: View {
     @State private var isBookmarked = false
     @State private var webViewURL: URL? = nil
     @AppStorage("useExternalBrowser") var useExternalBrowser = false
+    
+    @State private var isVoting = false
+    @State private var hasVoted = false
+    @State private var voteError: String?
+    @State private var showLoginAlert = false
     
     var body: some View {
         let theme = themeManager.current
@@ -73,6 +79,16 @@ struct StoryDetailView: View {
         .sheet(isPresented: $showUserProfile) {
             UserProfileView(username: selectedUser)
                 .environment(themeManager)
+        }
+        .alert("Login Required", isPresented: $showLoginAlert) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("Please login from Settings to vote on Hacker News")
+        }
+        .alert("Error Voting", isPresented: Binding(get: { voteError != nil }, set: { if !$0 { voteError = nil } })) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(voteError ?? "")
         }
         .sheet(isPresented: $showShareSheet) {
 #if os(iOS)
@@ -164,16 +180,40 @@ struct StoryDetailView: View {
             
             ActionBarButton(icon: "bubble.left.and.bubble.right", theme: theme) {}
             
-            ActionBarButton(icon: "hand.thumbsup", theme: theme) {
-                let urlString = "https://news.ycombinator.com/vote?id=\(story.id)&how=up"
-                if let url = URL(string: urlString) {
-                    #if os(iOS)
-                    UIApplication.shared.open(url)
-                    #else
-                    NSWorkspace.shared.open(url)
-                    #endif
+            Button(action: {
+                if !authService.isLoggedIn {
+                    showLoginAlert = true
+                    return
+                }
+                guard !hasVoted, !isVoting else { return }
+                
+                isVoting = true
+                Task {
+                    do {
+                        let success = try await authService.vote(itemId: story.id)
+                        if success {
+                            hasVoted = true
+                        } else {
+                            voteError = "Failed to vote. Please try again."
+                        }
+                    } catch {
+                        voteError = error.localizedDescription
+                    }
+                    isVoting = false
+                }
+            }) {
+                if isVoting {
+                    ProgressView()
+                        .frame(width: 44, height: 44)
+                        .tint(theme.accent)
+                } else {
+                    Image(systemName: hasVoted ? "hand.thumbsup.fill" : "hand.thumbsup")
+                        .font(.system(size: 18))
+                        .foregroundColor(hasVoted ? theme.accent : theme.secondaryText)
+                        .frame(width: 44, height: 44)
                 }
             }
+
             
             ActionBarButton(icon: isBookmarked ? "bookmark.fill" : "bookmark", theme: theme) {
                 BookmarkRepository.shared.toggleBookmark(story: story)
